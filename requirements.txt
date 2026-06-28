@@ -1,0 +1,10 @@
+streamlit
+python-dotenv
+pandas
+requests
+beautifulsoup4
+langchain
+langchain-openai
+langchain-chroma
+chromadb
+langsmith
