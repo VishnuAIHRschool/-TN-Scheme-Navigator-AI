@@ -1,180 +1,232 @@
-# 🏛️ TN Scheme Navigator AI
+# TN Scheme Navigator AI  
+## AI-Powered Tamil Nadu Government Scheme Assistant with Hybrid Graph RAG
 
-**TN Scheme Navigator AI** is a Gen AI RAG application built using **Streamlit, LangChain, OpenAI, ChromaDB, LangSmith, BeautifulSoup, and Python**.
+TN Scheme Navigator AI is a next-generation AI application that helps users search, understand, and verify Tamil Nadu Government scheme information.
 
-The application helps users search, understand, and explore Tamil Nadu Government schemes through a simple AI-powered citizen-service interface.
-
----
-
-## 🚀 Project Objective
-
-The objective of this project is to build a professional AI-powered scheme discovery assistant for Tamil Nadu Government schemes.
-
-The app allows users to ask natural language questions such as:
-
-* What is the funding pattern for Training to Farmers?
-* Who are the beneficiaries of Training to Farmers?
-* How can farmers avail Training to Farmers scheme?
-* Which schemes are related to seeds?
-* Which schemes provide grants?
-* Which schemes are useful for farmers, MSMEs, students, women, or entrepreneurs?
-
-The AI assistant retrieves relevant scheme details and provides simple answers with official source links for verification.
+The application uses **Vector RAG**, **Knowledge Graph RAG**, and **Hybrid AI Routing** to answer scheme-related questions in **English, Tamil, or Bilingual format**.
 
 ---
 
-## 🔗 Data Source
+## Project Objective
 
-The application uses scheme information from the Tamil Nadu Government scheme portal:
+The objective of this project is to build a citizen-friendly AI assistant that can:
+
+- Search Tamil Nadu Government scheme data
+- Explain schemes in simple language
+- Answer questions in English and Tamil
+- Retrieve relevant scheme details using Vector RAG
+- Understand relationships using Neo4j Knowledge Graph
+- Provide official source references for verification
+
+---
+
+## Live Use Case
+
+A user can ask:
 
 ```text
-https://www.tn.gov.in/scheme_list.php?dep_id=Mg==
-```
+Which schemes are available for farmers?
+Which schemes are sponsored by State?
+Which schemes provide subsidy benefits?
+விவசாயிகளுக்கான மானிய திட்டங்கள் எவை?
 
-The current version focuses on:
+The app retrieves relevant scheme data and generates a clear AI answer.
 
-```text
-Agriculture - Farmers Welfare Department
-```
-
----
-
-## 🧠 Tech Stack
-
-| Technology    | Purpose                                |
-| ------------- | -------------------------------------- |
-| Python        | Core programming language              |
-| Streamlit     | Frontend web application               |
-| LangChain     | RAG pipeline orchestration             |
-| OpenAI        | LLM response generation and embeddings |
-| ChromaDB      | Vector database for semantic search    |
-| LangSmith     | Tracing, debugging, and observability  |
-| BeautifulSoup | Web scraping                           |
-| Requests      | Fetching web pages                     |
-| Pandas        | CSV data handling                      |
-| Python Dotenv | Environment variable management        |
-
----
-
-## ✨ Key Features
-
-* AI-powered Tamil Nadu scheme assistant
-* Official scheme data scraping
-* Scheme detail extraction
-* CSV-based structured storage
-* LangChain RAG workflow
-* OpenAI embeddings
-* ChromaDB vector search
-* LangSmith tracing support
-* Streamlit citizen-service UI
-* Scheme Explorer page
-* Department-wise and beneficiary-wise filtering
-* Official source URL shown for verification
-* Premium Tamil Nadu Government-inspired UI
-* Agriculture-themed custom logo
-* Clean sidebar navigation
-* Scheme cards with badges
-* Responsible AI disclaimer
-
----
-
-## 🧾 How the Application Works
-
-```text
-Tamil Nadu Government Scheme Website
+Key Features
+Streamlit-based modern web application
+AI-powered scheme question answering
+ChromaDB Vector RAG for semantic search
+Neo4j AuraDB Knowledge Graph for relationship-based reasoning
+NetworkX graph preview and graph analysis
+Tamil, English, and Bilingual response support
+Smart Hybrid RAG routing
+Official scheme source references
+Scheme Explorer with filters
+Production-style UI with improved navigation and answer layout
+LangSmith tracing support
+Technology Stack
+Area	Technology
+Frontend	Streamlit
+AI Orchestration	LangChain
+LLM	OpenAI
+Vector Database	ChromaDB
+Embeddings	OpenAI Embeddings
+Knowledge Graph	Neo4j AuraDB
+Graph Query	Cypher
+Graph Analysis	NetworkX
+Data Collection	Requests, BeautifulSoup
+Data Handling	Pandas
+Observability	LangSmith
+Environment Management	python-dotenv
+System Architecture
+Tamil Nadu Scheme Website
         ↓
-Scrape Scheme List and Scheme Details
+scrape_schemes.py
         ↓
-Save Structured Data into CSV
+data/tn_scheme_details.csv
         ↓
-Convert Scheme Data into LangChain Documents
-        ↓
-Generate Embeddings using OpenAI
-        ↓
-Store Embeddings in ChromaDB
-        ↓
-User Asks Question in Streamlit
-        ↓
-LangChain Retriever Finds Relevant Scheme Data
-        ↓
-OpenAI Generates Answer using Retrieved Context
-        ↓
-App Displays Answer with Official Source Link
-        ↓
-LangSmith Tracks the Complete RAG Flow
-```
+        ├── ingest.py
+        │       ↓
+        │   ChromaDB Vector Database
+        │
+        ├── load_graph_to_neo4j.py
+        │       ↓
+        │   Neo4j AuraDB Knowledge Graph
+        │
+        └── networkx_graph_preview.py
+                ↓
+            NetworkX Graph Preview
 
----
+User Question
+        ↓
+Streamlit App
+        ↓
+Hybrid RAG Engine
+        ↓
+Vector RAG + Graph RAG
+        ↓
+OpenAI Final Answer
+        ↓
+Answer with Official References
+How the App Works
+1. Data Collection
 
-## 🏗️ Project Architecture
+The app scrapes Tamil Nadu Government scheme data from the official government website and stores it as a structured CSV file.
 
-```text
+data/tn_scheme_details.csv
+2. Vector RAG Layer
+
+The CSV data is converted into documents.
+
+Then OpenAI embeddings are generated and stored in ChromaDB.
+
+This helps the app answer meaning-based questions.
+
+Example:
+
+What schemes are available for farmers?
+3. Knowledge Graph Layer
+
+The same scheme data is loaded into Neo4j AuraDB as a graph.
+
+The graph contains nodes such as:
+
+Scheme
+Department
+Beneficiary
+Benefit Type
+Sponsor
+Keyword
+
+Relationships include:
+
+Scheme → BELONGS_TO → Department
+Scheme → FOR_BENEFICIARY → Beneficiary
+Scheme → PROVIDES_BENEFIT → Benefit Type
+Scheme → SPONSORED_BY → Sponsor
+Scheme → HAS_KEYWORD → Keyword
+
+This helps the app answer relationship-based questions.
+
+Example:
+
+Which schemes are sponsored by State?
+4. Hybrid RAG Layer
+
+The Hybrid RAG engine combines:
+
+ChromaDB Vector RAG
++
+Neo4j Knowledge Graph RAG
++
+OpenAI Final Response
+
+This allows the app to provide richer, more accurate answers.
+
+5. Tamil and Bilingual Support
+
+The app supports:
+
+English
+Tamil
+Bilingual
+
+Users can ask questions in Tamil and receive citizen-friendly Tamil responses.
+
+Project Folder Structure
 TN Scheme RAG/
 │
 ├── app.py
-│   └── Streamlit frontend application
-│
 ├── scrape_schemes.py
-│   └── Scrapes Tamil Nadu Government scheme list and detail pages
-│
 ├── ingest.py
-│   └── Converts CSV data into LangChain documents and stores embeddings in ChromaDB
-│
 ├── rag_engine.py
-│   └── Handles retrieval, context preparation, OpenAI response generation, and source references
+├── graph_rag_engine.py
+├── hybrid_rag_engine.py
+├── language_utils.py
+├── load_graph_to_neo4j.py
+├── networkx_graph_preview.py
+│
+├── test_neo4j_connection.py
+├── test_neo4j_query.py
+├── test_graph_rag.py
+├── test_hybrid_rag.py
+├── test_next_level_hybrid.py
 │
 ├── requirements.txt
-│   └── Python dependencies
-│
-├── .env
-│   └── API keys and tracing environment variables
-│
-├── .gitignore
-│   └── Files and folders excluded from GitHub
-│
 ├── README.md
-│   └── Project documentation
+├── .gitignore
+├── .env
 │
 ├── data/
-│   └── tn_scheme_details.csv
+│   ├── tn_scheme_details.csv
+│   └── knowledge_graph_preview.png
 │
-└── vector_db/
-    └── Local ChromaDB vector database
-```
+├── vector_db/
+│
+└── venv/
+Important Files
+File	Purpose
+app.py	Main Streamlit frontend application
+scrape_schemes.py	Scrapes Tamil Nadu scheme data
+ingest.py	Creates embeddings and stores data in ChromaDB
+rag_engine.py	Existing Vector RAG engine
+graph_rag_engine.py	Neo4j Graph RAG engine
+hybrid_rag_engine.py	Combines Vector RAG and Graph RAG
+language_utils.py	Tamil, English, and Bilingual language helpers
+load_graph_to_neo4j.py	Loads CSV data into Neo4j AuraDB
+networkx_graph_preview.py	Creates local graph preview using NetworkX
+requirements.txt	Python dependencies
+.env	API keys and credentials, not pushed to GitHub
+.gitignore	Prevents sensitive and unnecessary files from being pushed
+Environment Variables
 
----
+Create a .env file in the project root.
 
-## ⚙️ Setup Instructions
+OPENAI_API_KEY=your_openai_api_key_here
 
-### 1. Create Project Folder
+LANGSMITH_TRACING=true
+LANGSMITH_API_KEY=your_langsmith_api_key_here
+LANGSMITH_PROJECT=TN-Scheme-Navigator-AI
 
-```cmd
-cd E:\
-mkdir "TN Scheme RAG"
-cd "TN Scheme RAG"
-```
+NEO4J_URI=neo4j+s://your-aura-uri.databases.neo4j.io
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=your_neo4j_password_here
+NEO4J_DATABASE=neo4j
 
----
+Do not push .env to GitHub.
 
-### 2. Create Virtual Environment
-
-```cmd
+Installation
+1. Clone the repository
+git clone https://github.com/VishnuAIHRschool/-TN-Scheme-Navigator-AI.git
+2. Go to project folder
+cd "-TN-Scheme-Navigator-AI"
+3. Create virtual environment
 python -m venv venv
-```
-
-Activate virtual environment:
-
-```cmd
+4. Activate virtual environment
 venv\Scripts\activate
-```
-
----
-
-### 3. Install Dependencies
-
-Add the following packages in `requirements.txt`:
-
-```txt
+5. Install dependencies
+pip install -r requirements.txt
+Requirements
 streamlit
 python-dotenv
 pandas
@@ -185,278 +237,179 @@ langchain-openai
 langchain-chroma
 chromadb
 langsmith
-```
+neo4j
+networkx
+matplotlib
+langchain-neo4j
+Running the Full Project
+Step 1: Scrape scheme data
+python scrape_schemes.py
 
-Install dependencies:
+This creates:
 
-```cmd
-pip install --upgrade pip
-pip install -r requirements.txt
-```
+data/tn_scheme_details.csv
+Step 2: Create Vector Database
+python ingest.py
 
----
+This creates the ChromaDB vector database.
 
-## 🔐 Environment Variables
+Step 3: Test Neo4j connection
+python test_neo4j_connection.py
 
-Create a `.env` file and add:
+Expected output:
 
-```env
-OPENAI_API_KEY=your_openai_api_key_here
+Neo4j Aura connection successful
+Step 4: Load Knowledge Graph into Neo4j
+python load_graph_to_neo4j.py
+
+Expected output:
+
+Knowledge Graph loaded successfully into Neo4j AuraDB.
+Step 5: Create NetworkX Graph Preview
+python networkx_graph_preview.py
+
+This creates:
+
+data/knowledge_graph_preview.png
+Step 6: Test Graph RAG
+python test_graph_rag.py
+Step 7: Test Hybrid RAG
+python test_hybrid_rag.py
+Step 8: Run Streamlit App
+streamlit run app.py
+Streamlit App Pages
+1. Home
+
+Shows the project overview, architecture, features, and key metrics.
+
+2. AI Scheme Assistant
+
+Allows users to ask scheme-related questions using AI.
+
+3. Scheme Explorer
+
+Allows users to explore schemes using filters such as:
+
+Department
+Beneficiary
+Benefit Type
+Search keyword
+4. Knowledge Graph RAG
+
+Allows users to ask relationship-based questions using Neo4j Knowledge Graph RAG.
+
+Example:
+
+Which schemes are sponsored by State?
+5. About
+
+Explains the project, technology stack, and safety disclaimer.
+
+Sample Questions
+English Questions
+Which schemes are available for farmers?
+Which schemes provide subsidy benefits?
+Which schemes are sponsored by State?
+Which schemes are related to seed support?
+Which schemes are connected to soil health?
+Tamil Questions
+விவசாயிகளுக்கான திட்டங்கள் எவை?
+விவசாயிகளுக்கான மானிய திட்டங்கள் எவை?
+மாநில அரசு நிதியுதவி வழங்கும் திட்டங்கள் எவை?
+Neo4j Browser Queries
+
+After loading graph data into Neo4j AuraDB, you can test these Cypher queries.
+
+View graph
+MATCH (n) RETURN n LIMIT 50;
+View scheme relationships
+MATCH (s:Scheme)-[r]->(n)
+RETURN s.name, type(r), n.name
+LIMIT 50;
+State sponsored schemes
+MATCH (s:Scheme)-[:SPONSORED_BY]->(sp:Sponsor)
+WHERE toLower(sp.name) CONTAINS "state"
+RETURN s.name AS Scheme, sp.name AS Sponsored_By
+LIMIT 25;
+Farmer schemes
+MATCH (s:Scheme)-[:FOR_BENEFICIARY]->(b:Beneficiary)
+WHERE toLower(b.name) CONTAINS "farmer"
+RETURN s.name AS Scheme, b.name AS Beneficiary
+LIMIT 25;
+Grant schemes
+MATCH (s:Scheme)-[:PROVIDES_BENEFIT]->(bt:BenefitType)
+WHERE toLower(bt.name) CONTAINS "grant"
+RETURN s.name AS Scheme, bt.name AS Benefit
+LIMIT 25;
+LangSmith Tracing
+
+LangSmith is used for tracing and observing LangChain application runs.
+
+Enable it in .env:
 
 LANGSMITH_TRACING=true
 LANGSMITH_API_KEY=your_langsmith_api_key_here
 LANGSMITH_PROJECT=TN-Scheme-Navigator-AI
-```
 
-Important:
+This helps monitor:
 
-* Do not upload `.env` to GitHub.
-* Keep API keys private.
-* LangSmith variables are used for tracing and debugging the LangChain RAG flow.
+Prompt flow
+Retriever output
+LLM calls
+Graph RAG execution
+Debugging and evaluation
+Git Ignore
 
----
+The .gitignore file should include:
 
-## 🚫 Git Ignore
-
-Add this inside `.gitignore`:
-
-```gitignore
 venv/
 .env
 vector_db/
 __pycache__/
 *.pyc
-```
+*.pyo
+*.pyd
+.DS_Store
+data/knowledge_graph_preview.png
+Production Quality Improvements
+
+The latest app version includes:
+
+Premium sidebar branding
+Improved navigation button styling
+Better active and hover states
+Clear question input cards
+Better text area visibility
+Stronger example prompt buttons
+Improved Tamil readability
+Better AI answer card
+Route indicator badge
+Cleaner official source cards
+Better Scheme Explorer layout
+Professional government-tech visual design
+Responsible AI Disclaimer
+
+This application is designed for learning, exploration, and citizen-friendly information discovery.
+
+Users should always verify final eligibility, scheme benefits, and application process from the official Tamil Nadu Government source links.
+
+This app should not be treated as the final legal or eligibility authority.
+
+Future Enhancements
+Add all Tamil Nadu departments
+Add district-level filtering
+Add user eligibility checker
+Add voice input in Tamil
+Add PDF export for scheme summaries
+Add admin dashboard
+Add graph visualization inside Streamlit
+Add role-based analytics dashboard
+Add evaluation metrics for answer quality
+Add deployment on Streamlit Cloud
+Developed By
+
+Vishnukumar
+Gen AI Architect Program
+Hybrid Graph RAG Project
+TN Scheme Navigator AI
 
----
-
-## ▶️ How to Run the Project
-
-### Step 1: Scrape Scheme Data
-
-```cmd
-python scrape_schemes.py
-```
-
-This creates:
-
-```text
-data/tn_scheme_details.csv
-```
-
----
-
-### Step 2: Create Vector Database
-
-```cmd
-python ingest.py
-```
-
-This creates the ChromaDB vector database inside:
-
-```text
-vector_db/
-```
-
----
-
-### Step 3: Launch Streamlit App
-
-```cmd
-streamlit run app.py
-```
-
-The app will open at:
-
-```text
-http://localhost:8501
-```
-
----
-
-## 💬 Sample Questions
-
-```text
-What is the funding pattern for Training to Farmers?
-```
-
-```text
-Who are the beneficiaries of Training to Farmers?
-```
-
-```text
-How can farmers avail Training to Farmers scheme?
-```
-
-```text
-Which schemes are related to seeds?
-```
-
-```text
-Which schemes provide grants?
-```
-
-```text
-What schemes are useful for maize farmers?
-```
-
----
-
-## 🔍 LangSmith Tracing
-
-LangSmith is used to trace and monitor the LangChain RAG workflow.
-
-It helps track:
-
-* User question
-* Retriever call
-* Retrieved scheme documents
-* Prompt/context sent to OpenAI
-* Final AI response
-* Latency
-* Errors
-* Debugging information
-
-### Tracing Flow
-
-```text
-User Question
-        ↓
-LangChain RAG Engine
-        ↓
-ChromaDB Retriever
-        ↓
-Retrieved Scheme Documents
-        ↓
-OpenAI LLM
-        ↓
-Generated Answer
-        ↓
-LangSmith Trace Dashboard
-```
-
-This improves observability and makes the Gen AI application easier to debug, evaluate, and improve.
-
----
-
-## 🎨 UI/UX Improvements
-
-The app UI was upgraded to look like a premium Tamil Nadu Government AI citizen-service portal.
-
-UI improvements include:
-
-* Deep navy blue government-style theme
-* Government green secondary color
-* Gold/saffron accent color
-* Agriculture-inspired custom logo
-* Professional sidebar
-* Larger navigation menu
-* Premium active navigation pill
-* Bigger portal title
-* Clean hero section
-* White cards with soft shadows
-* Better typography
-* Clear input field visibility
-* Professional loading state
-* AI answer response card
-* Scheme cards with badges
-* Footer with responsible AI disclaimer
-
----
-
-## 🧩 Application Pages
-
-### 1. Home
-
-Shows the portal introduction, feature cards, statistics, and high-level RAG workflow.
-
-### 2. AI Scheme Assistant
-
-Allows users to ask natural language questions and receive AI-generated answers based on retrieved scheme data.
-
-### 3. Scheme Explorer
-
-Allows users to search and filter scheme records by department, beneficiary, and benefit type.
-
-### 4. About
-
-Explains the purpose, technology stack, and responsible AI usage.
-
----
-
-## ✅ GitHub Submission Steps
-
-Initialize Git:
-
-```cmd
-git init
-```
-
-Add files:
-
-```cmd
-git add .
-```
-
-Commit:
-
-```cmd
-git commit -m "Initial commit - TN Scheme Navigator AI"
-```
-
-Add remote repository:
-
-```cmd
-git remote add origin https://github.com/VishnuAIHRschool/-TN-Scheme-Navigator-AI.git
-```
-
-If remote already exists:
-
-```cmd
-git remote set-url origin https://github.com/VishnuAIHRschool/-TN-Scheme-Navigator-AI.git
-```
-
-Push to GitHub:
-
-```cmd
-git branch -M main
-git push -u origin main
-```
-
----
-
-## ⚠️ Responsible AI Disclaimer
-
-This AI assistant is for informational support only.
-
-Users should verify final scheme details such as eligibility, subsidy amount, funding pattern, documents required, application process, and scheme validity from the official Tamil Nadu Government website before taking action.
-
----
-
-## 🔮 Future Enhancements
-
-* Tamil language support
-* Voice-based scheme search
-* Multi-department scheme crawling
-* MSME, Education, Health, Welfare, and Women Development scheme data
-* Eligibility checker form
-* Scheme recommendation engine
-* PDF download of AI answers
-* Admin refresh button
-* User login
-* Chat history
-* Analytics dashboard
-* Deployment to Streamlit Cloud
-
----
-
-## 👨‍💻 Developed By
-
-**Vishnukumar**
-Gen AI Application using Streamlit, LangChain, OpenAI, ChromaDB, LangSmith, and RAG.
-
----
-
-## One-Line Summary
-
-**TN Scheme Navigator AI converts Tamil Nadu Government scheme information into an AI-searchable knowledge base and helps users discover scheme details through natural language questions with official source verification.**
