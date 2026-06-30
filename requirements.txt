@@ -8,3 +8,7 @@ langchain-openai
 langchain-chroma
 chromadb
 langsmith
+neo4j
+networkx
+matplotlib
+langchain-neo4j

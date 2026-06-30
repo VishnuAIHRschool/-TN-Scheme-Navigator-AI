@@ -3,3 +3,7 @@ venv/
 vector_db/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.DS_Store
+data/knowledge_graph_preview.png
