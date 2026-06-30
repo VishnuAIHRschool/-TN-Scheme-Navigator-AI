@@ -118,6 +118,34 @@ def get_text(language: str):
     return fallback_ui_text(language)
 
 
+def get_neo4j_status() -> Tuple[str, str]:
+    """
+    Returns (mode, message) describing the active Graph RAG backend.
+
+    mode is one of: "networkx", "neo4j", "misconfigured"
+    """
+    use_neo4j = os.getenv("USE_NEO4J", "false").strip().lower() == "true"
+
+    if not use_neo4j:
+        return "networkx", "Graph RAG is running on the local NetworkX fallback (USE_NEO4J=false)."
+
+    missing = [
+        name
+        for name in ["NEO4J_URI", "NEO4J_USERNAME", "NEO4J_PASSWORD"]
+        if not os.getenv(name)
+    ]
+
+    if missing:
+        return (
+            "misconfigured",
+            "USE_NEO4J=true but these variables are missing from .env: "
+            + ", ".join(missing)
+            + ". Graph RAG will automatically fall back to the local NetworkX graph.",
+        )
+
+    return "neo4j", "Graph RAG is configured to use Neo4j AuraDB."
+
+
 def get_language_note(language: str) -> str:
     if language == "Tamil":
         return "AI பதில் எளிய, குடிமக்களுக்கு புரியும் தமிழில் வழங்கப்படும்."
@@ -801,17 +829,33 @@ def render_sidebar() -> Tuple[str, str]:
 
     st.sidebar.markdown('<div class="sidebar-section-title">App Context</div>', unsafe_allow_html=True)
 
+    neo4j_mode, _ = get_neo4j_status()
+    graph_backend_label = {
+        "networkx": "NetworkX (local fallback)",
+        "neo4j": "Neo4j AuraDB",
+        "misconfigured": "NetworkX (Neo4j misconfigured)",
+    }[neo4j_mode]
+
     st.sidebar.markdown(
-        """
+        f"""
         <div class="sidebar-info-card">
             <strong>AI architecture</strong><br>
             Vector RAG · Graph RAG · Hybrid Routing<br><br>
+            <strong>Active graph backend</strong><br>
+            {esc(graph_backend_label)}<br><br>
             <strong>Stack</strong><br>
             Streamlit · LangChain · OpenAI · ChromaDB · Neo4j AuraDB · NetworkX
         </div>
         """,
         unsafe_allow_html=True,
     )
+
+    if neo4j_mode == "misconfigured":
+        st.sidebar.warning(
+            "USE_NEO4J=true but Neo4j credentials are missing in .env. "
+            "Falling back to NetworkX.",
+            icon="⚠️",
+        )
 
     return selected_page, language
 
@@ -1358,6 +1402,10 @@ def graph_rag_page(language: str):
         """,
         unsafe_allow_html=True,
     )
+
+    neo4j_mode, neo4j_message = get_neo4j_status()
+    if neo4j_mode == "misconfigured":
+        st.warning(neo4j_message, icon="⚠️")
 
     if ask_hybrid_ai is None:
         st.warning(
