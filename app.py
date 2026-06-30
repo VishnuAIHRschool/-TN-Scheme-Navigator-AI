@@ -1,4 +1,8 @@
-import html
+# ACTIVE AI ENGINE:
+# app.py uses hybrid_rag_engine.ask_hybrid_ai() as the primary AI engine.
+# hybrid_rag_engine combines rag_engine.py for ChromaDB Vector RAG and graph_rag_engine.py for Graph RAG.
+# graph_rag_engine.py defaults to local NetworkX fallback and uses Neo4j AuraDB only when USE_NEO4J=true.
+# import html
 import os
 from typing import Any, List, Tuple
 
