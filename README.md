@@ -218,7 +218,7 @@ NEO4J_DATABASE=neo4j
 Then run:
 
 ```cmd
-python load_graph_to_neo4j.py
+python scripts/load_graph_to_neo4j.py
 ```
 
 ---
@@ -236,11 +236,11 @@ data/tn_scheme_details.csv
         │       ↓
         │   ChromaDB Vector Database
         │
-        ├── networkx_graph_preview.py
+        ├── scripts/networkx_graph_preview.py
         │       ↓
         │   Local NetworkX Graph Preview
         │
-        └── load_graph_to_neo4j.py
+        └── scripts/load_graph_to_neo4j.py
                 ↓
             Optional Neo4j AuraDB Knowledge Graph
 
@@ -456,8 +456,10 @@ TN Scheme RAG/
 ├── graph_rag_engine.py
 ├── hybrid_rag_engine.py
 ├── language_utils.py
-├── load_graph_to_neo4j.py
-├── networkx_graph_preview.py
+│
+├── scripts/
+│   ├── load_graph_to_neo4j.py
+│   └── networkx_graph_preview.py
 │
 ├── requirements.txt
 ├── requirements-dev.txt
@@ -471,6 +473,7 @@ TN Scheme RAG/
 │   └── test_rag_system.py
 │
 ├── docs/
+│   ├── sample_questions.md
 │   └── screenshots/
 │       ├── 01-home-page.png
 │       ├── 02-tamil-query.png
@@ -498,8 +501,8 @@ TN Scheme RAG/
 | `graph_rag_engine.py` | NetworkX fallback and optional Neo4j Graph RAG |
 | `hybrid_rag_engine.py` | Combines Vector RAG and Graph RAG |
 | `language_utils.py` | Tamil, English, and Bilingual prompt helpers |
-| `load_graph_to_neo4j.py` | Loads graph data into Neo4j AuraDB |
-| `networkx_graph_preview.py` | Creates local graph preview |
+| `scripts/load_graph_to_neo4j.py` | Loads graph data into Neo4j AuraDB |
+| `scripts/networkx_graph_preview.py` | Creates local graph preview |
 | `tests/test_rag_system.py` | Consolidated pytest test suite |
 
 ---
@@ -604,7 +607,7 @@ python ingest.py
 ### Step 4: Generate NetworkX preview
 
 ```cmd
-python networkx_graph_preview.py
+python scripts/networkx_graph_preview.py
 ```
 
 ### Step 5: Run Streamlit app
@@ -636,7 +639,7 @@ NEO4J_DATABASE=neo4j
 ### Step 2: Load graph into Neo4j
 
 ```cmd
-python load_graph_to_neo4j.py
+python scripts/load_graph_to_neo4j.py
 ```
 
 ### Step 3: Run app
