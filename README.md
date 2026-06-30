@@ -61,17 +61,17 @@ Run the app and ask this question in the **Knowledge Graph RAG** page:
 Which schemes are sponsored by State?
 ```
 
-Expected style of output:
+Expected style of output (real example pulled from `data/tn_scheme_details.csv`):
 
 ```text
 Relevant schemes found:
 
-1. [Scheme Name]
+1. Training to Farmers
    Department: Agriculture - Farmers Welfare Department
    Beneficiary: Farmers
-   Benefit Type: Grants / Subsidy / Training
+   Benefit Type: Grants
    Sponsored By: State
-   Source: Official Tamil Nadu Government source link
+   Source: https://www.tn.gov.in/scheme_details.php?id=MTU2Ng==
 
 Note: Verify final eligibility and application process from the official source link.
 ```

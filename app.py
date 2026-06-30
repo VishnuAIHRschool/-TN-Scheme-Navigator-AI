@@ -548,6 +548,25 @@ def inject_css():
             margin-top: 10px;
         }
 
+        div[data-testid="stVerticalBlockBorderWrapper"] {
+            background:
+                linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 24px !important;
+            border: 1px solid rgba(15,23,42,0.10) !important;
+            box-shadow: 0 20px 52px rgba(15, 23, 42, 0.11);
+            margin-top: 10px;
+        }
+
+        div[data-testid="stVerticalBlockBorderWrapper"] p {
+            color: #1e293b;
+            line-height: 1.85;
+            font-size: 16px;
+        }
+
+        div[data-testid="stVerticalBlockBorderWrapper"] strong {
+            color: #0f172a;
+        }
+
         .answer-title-row {
             display: flex;
             align-items: center;
@@ -947,14 +966,8 @@ def render_route_badge(route: str):
 
 
 def render_answer_card(answer: str):
-    st.markdown(
-        f"""
-        <div class="answer-card">
-            {esc(answer)}
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    with st.container(border=True):
+        st.markdown(answer)
 
 
 def render_source_cards(sources: List[Any]):
@@ -962,34 +975,35 @@ def render_source_cards(sources: List[Any]):
         st.info("No official source references were returned.")
         return
 
-    for index, source in enumerate(sources, start=1):
-        source_text = safe_source_text(source)
+    with st.expander(f"📎 Show {len(sources)} official source reference(s)", expanded=False):
+        for index, source in enumerate(sources, start=1):
+            source_text = safe_source_text(source)
 
-        if "http" in source_text:
-            parts = source_text.split("http", 1)
-            title = parts[0].strip(" -")
-            url = "http" + parts[1].strip()
+            if "http" in source_text:
+                parts = source_text.split("http", 1)
+                title = parts[0].strip(" -")
+                url = "http" + parts[1].strip()
 
-            st.markdown(
-                f"""
-                <div class="source-card">
-                    <div class="mini-label">Official Reference {index}</div>
-                    <strong>{esc(title) if title else "Official source"}</strong><br>
-                    <a href="{esc(url)}" target="_blank">Open official source</a>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        else:
-            st.markdown(
-                f"""
-                <div class="source-card">
-                    <div class="mini-label">Official Reference {index}</div>
-                    {esc(source_text)}
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+                st.markdown(
+                    f"""
+                    <div class="source-card">
+                        <div class="mini-label">Official Reference {index}</div>
+                        <strong>{esc(title) if title else "Official source"}</strong><br>
+                        <a href="{esc(url)}" target="_blank">Open official source</a>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.markdown(
+                    f"""
+                    <div class="source-card">
+                        <div class="mini-label">Official Reference {index}</div>
+                        {esc(source_text)}
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
 
 
 def render_footer():
