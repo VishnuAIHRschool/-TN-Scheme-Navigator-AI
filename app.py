@@ -541,6 +541,7 @@ def inject_css():
             border: 1px solid rgba(15,118,110,0.26);
             background: #ecfdf5;
             color: #047857;
+            margin-bottom: 14px;
         }
 
         .route-badge.hybrid {
@@ -772,8 +773,17 @@ def render_sidebar_brand():
     )
 
 
-def render_sidebar(language: str) -> str:
+def render_sidebar() -> Tuple[str, str]:
     render_sidebar_brand()
+
+    st.sidebar.markdown('<div class="sidebar-section-title">Response Language</div>', unsafe_allow_html=True)
+
+    language = st.sidebar.selectbox(
+        "Response Language / பதில் மொழி",
+        ["English", "Tamil", "Bilingual"],
+        index=0,
+        label_visibility="collapsed",
+    )
 
     st.sidebar.markdown('<div class="sidebar-section-title">Navigation</div>', unsafe_allow_html=True)
 
@@ -792,10 +802,8 @@ def render_sidebar(language: str) -> str:
     st.sidebar.markdown('<div class="sidebar-section-title">App Context</div>', unsafe_allow_html=True)
 
     st.sidebar.markdown(
-        f"""
+        """
         <div class="sidebar-info-card">
-            <strong>Response language</strong><br>
-            {esc(language)}<br><br>
             <strong>AI architecture</strong><br>
             Vector RAG · Graph RAG · Hybrid Routing<br><br>
             <strong>Stack</strong><br>
@@ -805,7 +813,7 @@ def render_sidebar(language: str) -> str:
         unsafe_allow_html=True,
     )
 
-    return selected_page
+    return selected_page, language
 
 
 def render_portal_header():
@@ -1097,7 +1105,7 @@ def home_page(df: pd.DataFrame):
 
     with c3:
         render_feature_card(
-            "தமிழ்",
+            "🗣️",
             "Tamil + English AI",
             "Supports English, Tamil, and bilingual responses so scheme information is easier for citizens to understand.",
         )
@@ -1533,13 +1541,7 @@ def main():
 
     df = load_scheme_data()
 
-    language = st.sidebar.selectbox(
-        "Response Language / பதில் மொழி",
-        ["English", "Tamil", "Bilingual"],
-        index=0,
-    )
-
-    selected_page = render_sidebar(language)
+    selected_page, language = render_sidebar()
 
     if selected_page == "🏠 Home":
         home_page(df)

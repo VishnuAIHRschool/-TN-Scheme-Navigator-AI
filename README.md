@@ -39,22 +39,6 @@ The app retrieves relevant scheme information and explains it in a simple format
 
 ## Demo Screenshots
 
-> Add screenshots before final GitHub submission.
-
-Create this folder:
-
-```text
-docs/screenshots/
-```
-
-Recommended screenshots:
-
-```text
-docs/screenshots/01-home-page.png
-docs/screenshots/02-tamil-query.png
-docs/screenshots/03-english-response.png
-```
-
 ### Home Page
 
 ![Home Page](docs/screenshots/01-home-page.png)
