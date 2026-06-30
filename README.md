@@ -134,6 +134,20 @@ Current focus department:
 Agriculture - Farmers Welfare Department
 ```
 
+### Data Freshness
+
+`data/tn_scheme_details.csv` is committed to the repo as a snapshot so the app runs without
+requiring a scrape on first clone. It is **not** auto-refreshed.
+
+- Re-run `python scrape_schemes.py` whenever you need the latest scheme listings from the
+  official site (the script overwrites the CSV in place).
+- After re-scraping, re-run `python ingest.py` to rebuild the ChromaDB vector store, and
+  `python scripts/load_graph_to_neo4j.py` if you are using Neo4j mode, since both are built
+  from the CSV and will not pick up changes automatically.
+- There is currently no scheduled re-scrape (cron, GitHub Action, etc.) — treat the committed
+  CSV as "last known good" data, not live data, and verify dates/amounts against the official
+  source link shown with each answer.
+
 ---
 
 ## Active AI Engine Flow
@@ -521,6 +535,33 @@ NEO4J_DATABASE=neo4j
 ```
 
 Do not push `.env` to GitHub.
+
+---
+
+## Setup Order at a Glance
+
+Required, in order, for the app to run at all:
+
+```text
+1. pip install -r requirements.txt
+2. copy .env.example .env   (fill in OPENAI_API_KEY)
+3. python ingest.py          (builds vector_db/ from the committed CSV)
+4. streamlit run app.py
+```
+
+`data/tn_scheme_details.csv` already ships in the repo, so step 3 works out of the box without
+needing to scrape first. Everything below is optional and only needed if you want to refresh
+the data or enable extra graph tooling:
+
+```text
+python scrape_schemes.py              # optional: refresh data/tn_scheme_details.csv
+                                       # re-run ingest.py after this if you do
+python scripts/networkx_graph_preview.py   # optional: generates data/knowledge_graph_preview.png
+python scripts/load_graph_to_neo4j.py      # optional: only if USE_NEO4J=true
+```
+
+See [Data Freshness](#data-freshness) for why the CSV isn't auto-refreshed, and the two
+sections below for the full NetworkX-only and Neo4j walkthroughs.
 
 ---
 
