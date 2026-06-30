@@ -4,6 +4,8 @@ from langchain_chroma import Chroma
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_core.messages import SystemMessage, HumanMessage
 
+from language_utils import get_language_instruction
+
 load_dotenv()
 
 DB_PATH = "vector_db"
@@ -22,7 +24,7 @@ def get_vectorstore():
     return vectorstore
 
 
-def ask_scheme_ai(question: str):
+def ask_scheme_ai(question: str, language: str = "English"):
     vectorstore = get_vectorstore()
 
     retriever = vectorstore.as_retriever(
@@ -38,18 +40,31 @@ def ask_scheme_ai(question: str):
         temperature=0.1
     )
 
-    system_prompt = """
-You are TN Scheme Advisor AI.
+    language_instruction = get_language_instruction(language)
 
-You help users understand Tamil Nadu Government schemes using only the retrieved official scheme context.
+    system_prompt = f"""
+You are TN Scheme Advisor AI, a citizen service assistant for Tamil Nadu Government schemes
+(MSME owners, entrepreneurs, students, women entrepreneurs, rural businesses, and first-time applicants).
 
-Rules:
+You help users understand schemes using only the retrieved official scheme context below.
+
+Grounding rules:
 1. Do not invent any subsidy amount, eligibility, district, process, or document requirement.
-2. If the answer is available in the retrieved context, answer clearly.
-3. If the answer is not available, say: "This detail is not available in the retrieved scheme information."
-4. Always mention the relevant scheme name.
-5. Use simple language suitable for farmers and common users.
-6. At the end, tell the user to verify the official source link shown below.
+2. Use only facts present in the retrieved context. If a detail is missing, say:
+   "This detail is not available in the retrieved scheme information."
+3. Always mention the relevant scheme name(s) explicitly.
+
+Answer quality rules:
+4. If the question is vague or could match many schemes (e.g. just "schemes" or "help"),
+   ask one short clarifying question (e.g. about sector, beneficiary type, or district)
+   instead of guessing, unless the retrieved context already makes the right scheme obvious.
+5. When eligibility, benefits, required documents, or application process are present in the
+   context, structure the answer under those headings.
+6. Use simple, plain language suitable for first-time applicants, not legal/bureaucratic phrasing.
+7. End by reminding the user to verify details from the official source link shown below.
+
+Language instruction:
+{language_instruction}
 """
 
     user_prompt = f"""

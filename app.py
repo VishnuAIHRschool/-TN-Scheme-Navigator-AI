@@ -2,7 +2,7 @@
 # app.py uses hybrid_rag_engine.ask_hybrid_ai() as the primary AI engine.
 # hybrid_rag_engine combines rag_engine.py for ChromaDB Vector RAG and graph_rag_engine.py for Graph RAG.
 # graph_rag_engine.py defaults to local NetworkX fallback and uses Neo4j AuraDB only when USE_NEO4J=true.
-# import html
+import html
 import os
 from typing import Any, List, Tuple
 
@@ -1012,8 +1012,8 @@ def render_question_shell(title: str, text: str):
 # AI CALL HELPERS
 # ============================================================
 
-def run_vector_ai(question: str) -> Tuple[str, List[Any]]:
-    response = ask_scheme_ai(question)
+def run_vector_ai(question: str, language: str = "English") -> Tuple[str, List[Any]]:
+    response = ask_scheme_ai(question, language)
 
     if isinstance(response, tuple):
         if len(response) >= 2:
@@ -1026,7 +1026,7 @@ def run_vector_ai(question: str) -> Tuple[str, List[Any]]:
 
 def run_hybrid_ai(question: str, language: str) -> Tuple[str, List[Any], str]:
     if ask_hybrid_ai is None:
-        answer, sources = run_vector_ai(question)
+        answer, sources = run_vector_ai(question, language)
         return answer, sources, "vector"
 
     response = ask_hybrid_ai(question, language)

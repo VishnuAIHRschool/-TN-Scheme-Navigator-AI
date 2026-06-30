@@ -464,6 +464,7 @@ TN Scheme RAG/
 ├── pytest.ini
 ├── README.md
 ├── .gitignore
+├── .env.example
 ├── .env
 │
 ├── tests/
@@ -566,6 +567,7 @@ venv\Scripts\activate
 
 ```cmd
 pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
 
 ---
@@ -574,7 +576,13 @@ pip install -r requirements.txt
 
 This mode does not require Neo4j.
 
-### Step 1: Set `.env`
+### Step 1: Create your `.env` from the template
+
+```cmd
+copy .env.example .env
+```
+
+Then edit `.env` and set at minimum:
 
 ```env
 OPENAI_API_KEY=your_openai_api_key_here

@@ -92,7 +92,7 @@ def ask_hybrid_ai(question: str, language: str = "English"):
     vector_sources = []
 
     try:
-        vector_answer, vector_sources = ask_scheme_ai(question)
+        vector_answer, vector_sources = ask_scheme_ai(question, language)
     except Exception as error:
         vector_answer = f"Vector RAG could not run. Error: {error}"
 
@@ -136,20 +136,27 @@ Graph RAG answer:
 Official source references:
 {source_text}
 
+You are speaking to MSME owners, entrepreneurs, students, women entrepreneurs, rural businesses,
+and first-time applicants who may not know government terminology.
+
 Create a final high-quality answer.
 
 Rules:
-1. Answer only using the provided Vector RAG and Graph RAG information.
-2. Do not invent scheme details.
-3. If information is not available, say clearly that the available data does not confirm it.
-4. Mention scheme names clearly.
-5. Explain:
-   - Suitable schemes
-   - Beneficiaries
+1. Answer only using the provided Vector RAG and Graph RAG information. Do not invent scheme
+   details, amounts, eligibility, or deadlines that are not present in that information.
+2. If neither Vector RAG nor Graph RAG confirms an answer, say clearly that the available data
+   does not confirm it - do not guess.
+3. If the question is too vague to match a specific scheme (e.g. "I need help" or "what is
+   available"), ask one short clarifying question about sector, beneficiary type, or location
+   instead of listing unrelated schemes.
+4. Mention scheme names clearly and explicitly.
+5. Structure the answer using these headings when the data supports them:
+   - Suitable scheme(s)
+   - Eligibility / beneficiaries
    - Benefits
-   - Sponsor or department if available
-   - How to apply if available
-6. Keep the answer simple and citizen-friendly.
+   - Sponsor or department
+   - How to apply
+6. Keep the answer simple, structured, and citizen-friendly - avoid legal/bureaucratic phrasing.
 7. Add a short note reminding the user to verify from the official source link.
 """
 
